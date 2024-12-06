@@ -1,0 +1,12 @@
+---
+- name: Copy db to server
+  ansible.builtin.copy:
+    src: '{{ import_db_db_file }}'
+    dest: /etc/x-ui/x-ui.db
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Restart x-ui
+  ansible.builtin.import_role:
+    name: restart_panel

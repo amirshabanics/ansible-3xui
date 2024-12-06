@@ -9,28 +9,23 @@
       tags:
         - install
       vars:
-        install_panel_xui_version: "{{ xui_version }}"
-        install_panel_xui_panel_port: "{{ xui_panel_port }}"
+        install_panel_xui_version: '{{ xui_version }}'
+        install_panel_xui_panel_port: '{{ xui_panel_port }}'
     - name: Certificate domain
       ansible.builtin.import_role:
         name: certificate_url
       tags:
         - certificate
       vars:
-        certificate_url_ip: "{{ ansible_host }}"
-        certificate_url_token: "{{ cloudflare_token }}"
-        certificate_url_zone_id: "{{ cloudflare_zone_id }}"
-        certificate_url_record_id: "{{ cloudflare_dns_record_id }}"
-        certificate_url_domain: "{{ domain }}"
-
-    # - name: Copy db to server
-    #   ansible.builtin.copy:
-    #     src: base.db
-    #     dest: /etc/x-ui/x-ui.db
-    #     owner: root
-    #     group: root
-    #     mode: '0755'
-
-    # - name: Restart x-ui
-    #   ansible.builtin.import_role:
-    #     name: restart_panel
+        certificate_url_ip: '{{ ansible_host }}'
+        certificate_url_token: '{{ cloudflare_token }}'
+        certificate_url_zone_id: '{{ cloudflare_zone_id }}'
+        certificate_url_record_id: '{{ cloudflare_dns_record_id }}'
+        certificate_url_domain: '{{ domain }}'
+    - name: Restore DB
+      ansible.builtin.import_role:
+        name: import_db
+      tags:
+        - restore
+      vars:
+        import_db_db_file: '{{ xui_db_file }}'

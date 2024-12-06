@@ -3,6 +3,7 @@ all:
     vpn:
       hosts:
         vyas2:
+          xui_db_file: x-ui.db
           cloudflare_zone_id: !vault |
                               $ANSIBLE_VAULT;1.1;AES256
                               37343839393264376462373737396333616439333035323837613434333537633135323466633062
