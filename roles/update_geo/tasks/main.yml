@@ -1,0 +1,6 @@
+---
+- name: Update Geo
+  ansible.builtin.shell: |
+    echo "{{ update_geo_input }}" | x-ui
+  args:
+    executable: /bin/bash

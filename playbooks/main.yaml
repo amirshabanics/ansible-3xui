@@ -11,6 +11,11 @@
       vars:
         install_panel_xui_version: '{{ xui_version }}'
         install_panel_xui_panel_port: '{{ xui_panel_port }}'
+    - name: Update Geo
+      ansible.builtin.import_role:
+        name: update_geo
+      tags:
+        - geo
     - name: Certificate domain
       ansible.builtin.import_role:
         name: certificate_url
