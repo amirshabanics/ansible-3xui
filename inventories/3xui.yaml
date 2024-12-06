@@ -1,0 +1,5 @@
+---
+all:
+  vars:
+    xui_version: v2.4.7
+    xui_panel_port: 2053

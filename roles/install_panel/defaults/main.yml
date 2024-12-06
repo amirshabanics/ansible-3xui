@@ -1,0 +1,16 @@
+---
+install_panel_xui_version: v2.4.7
+install_panel_xui_panel_port: 2053
+install_panel_install_script_url: 'https://raw.githubusercontent.com/mhsanaei/3x-ui/{{ xui_version }}/install.sh'
+install_panel_install_inputs: |
+  y
+  {{ install_panel_xui_panel_port }}
+install_panel_enable_service: |
+  16
+
+  0
+install_panel_install_bbr: |
+  23
+  1
+  0
+  0

@@ -1,0 +1,6 @@
+---
+- name: Restart x-ui
+  ansible.builtin.shell: |
+    echo "{{ restart_panel_input }}" | x-ui
+  args:
+    executable: /bin/bash

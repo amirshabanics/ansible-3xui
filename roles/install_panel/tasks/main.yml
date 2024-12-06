@@ -1,0 +1,34 @@
+---
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Ensure curl is installed
+  ansible.builtin.apt:
+    name: curl
+    state: present
+    update_cache: true
+
+- name: Run 3x-ui installation script
+  ansible.builtin.shell: |
+    echo "{{ install_panel_install_inputs }}" | bash <(curl -Ls "{{ install_panel_install_script_url }}") {{ install_panel_xui_version }}
+  args:
+    executable: /bin/bash
+
+- name: Enable bbr
+  ansible.builtin.shell: |
+    echo "{{ install_panel_install_bbr }}" | x-ui
+  args:
+    executable: /bin/bash
+
+- name: Enable 3xui-service
+  ansible.builtin.shell: |
+    echo "{{ install_panel_enable_service }}" | x-ui
+  args:
+    executable: /bin/bash
+
+- name: Ensure 3x-ui service is running and enabled
+  ansible.builtin.service:
+    name: x-ui
+    state: started
+    enabled: true

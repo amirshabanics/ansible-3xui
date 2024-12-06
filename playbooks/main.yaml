@@ -1,0 +1,24 @@
+---
+- name: Main Playbook
+  hosts: vpn
+  become: true
+  tasks:
+    - name: Install panel
+      ansible.builtin.import_role:
+        name: install_panel
+      tags:
+        - install
+      vars:
+        install_panel_xui_version: "{{ xui_version }}"
+        install_panel_xui_panel_port: "{{ xui_panel_port }}"
+    # - name: Copy db to server
+    #   ansible.builtin.copy:
+    #     src: base.db
+    #     dest: /etc/x-ui/x-ui.db
+    #     owner: root
+    #     group: root
+    #     mode: '0755'
+
+    # - name: Restart x-ui
+    #   ansible.builtin.import_role:
+    #     name: restart_panel
