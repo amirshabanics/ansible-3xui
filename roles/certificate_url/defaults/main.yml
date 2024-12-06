@@ -1,0 +1,16 @@
+---
+certificate_url_ip: 1.1.1.1
+certificate_url_token: token
+certificate_url_zone_id: zone
+certificate_url_record_id: record
+certificate_url_domain: domain
+
+certificate_url_api: 'https://api.cloudflare.com/client/v4/zones/{{ certificate_url_zone_id }}/dns_records/{{ certificate_url_record_id }}'
+certificate_url_set_domain_and_turn_off_proxy_payload:
+  proxied: false
+  content: '{{ certificate_url_ip }}'
+certificate_url_turn_on_proxy_payload:
+  proxied: true
+
+certificate_url_domain_public_key: /etc/letsencrypt/live/{{ certificate_url_domain }}/fullchain.pem
+certificate_url_domain_private_key: /etc/letsencrypt/live/{{ certificate_url_domain }}/privkey.pem

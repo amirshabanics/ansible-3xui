@@ -1,0 +1,41 @@
+---
+- name: Update DNS record IP and turn off proxied
+  ansible.builtin.uri:
+    url: '{{ certificate_url_api }}'
+    method: PATCH
+    headers:
+      Content-Type: 'application/json'
+      Authorization: 'Bearer {{ certificate_url_token }}'
+    body: '{{ certificate_url_set_domain_and_turn_off_proxy_payload | to_json }}'
+    body_format: json
+
+- name: Check if Certbot is installed
+  ansible.builtin.command: 'which certbot'
+  register: certbot_check
+  failed_when: false
+  changed_when: false
+
+- name: Install Certbot if not installed
+  ansible.builtin.apt:
+    name: certbot
+    state: present
+  when: certbot_check.rc != 0
+
+- name: Generate certificate for {{ certificate_url_domain }}
+  ansible.builtin.command: >
+    certbot certonly --standalone
+    --agree-tos --register-unsafely-without-email
+    -d {{ certificate_url_domain }}
+
+- name: Enable renewal
+  ansible.builtin.command: 'certbot renew --dry-run'
+
+- name: Update DNS record IP and turn off proxied
+  ansible.builtin.uri:
+    url: '{{ certificate_url_api }}'
+    method: PATCH
+    headers:
+      Content-Type: 'application/json'
+      Authorization: 'Bearer {{ certificate_url_token }}'
+    body: '{{ certificate_url_turn_on_proxy_payload | to_json }}'
+    body_format: json
